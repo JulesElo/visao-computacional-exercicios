@@ -34,14 +34,12 @@ def apply_frequency_convolution(image, kernel):
     end = time.perf_counter()
     return result, (end - start)
 
-if __name__ == "__main__":
+def run():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)
     input_dir = os.path.join(project_root, "data")
     
     # Reutilizando a imagem da parede do Exercício 2.
-    # Fotos de iPhone possuem alta resolução (muitos megapixels), o que é 
-    # perfeito para forçar o processador e evidenciar a diferença de tempo.
     input_image_path = os.path.join(input_dir, "bg_ex2.jpeg")
     
     if not os.path.exists(input_image_path):
@@ -50,8 +48,6 @@ if __name__ == "__main__":
     # Carrega a imagem em tons de cinza para simplificar o processamento da FFT
     image = cv2.imread(input_image_path, cv2.IMREAD_GRAYSCALE)
     
-    # Definindo um Kernel GRANDE (71x71 de Desfoque Médio).
-    # É aqui que o domínio da frequência destrói o domínio espacial em desempenho.
     kernel_size = 71
     kernel = np.ones((kernel_size, kernel_size), np.float32) / (kernel_size * kernel_size)
     
@@ -64,7 +60,7 @@ if __name__ == "__main__":
     _, _ = apply_frequency_convolution(image[:100, :100], kernel[:5, :5])
     
     # Execução Real e Cronometrada
-    print("\nCalculando no Domínio Espacial (Aguarde...).")
+    print("\nCalculando no Domínio Espacial...")
     spatial_result, spatial_time = apply_spatial_convolution(image, kernel)
     
     print("Calculando no Domínio da Frequência (FFT)...")
@@ -82,6 +78,8 @@ if __name__ == "__main__":
         print(f"VENCEDOR: Frequência ({ganho:.1f}x MAIS RÁPIDA)")
     else:
         print("VENCEDOR: Espacial")
-        print("Dica: Aumente a variável 'kernel_size' para ver a Frequência vencer.")
         
     print("="*35 + "\n")
+
+if __name__ == "__main__":
+    run()

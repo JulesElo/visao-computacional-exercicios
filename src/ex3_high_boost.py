@@ -25,13 +25,12 @@ def custom_high_boost(image, A=1.2, kernel_size=(5, 5)):
     
     return img_high_pass_clipped, img_high_boost_clipped
 
-if __name__ == "__main__":
+def run():
     # Configuração de caminhos dinâmicos absolutos
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)
     input_dir = os.path.join(project_root, "data")
     
-    # Vamos reaproveitar a imagem de entrada do exercício 1
     input_file = os.path.join(input_dir, "input_ex3.jpeg")
     
     if not os.path.exists(input_file):
@@ -57,3 +56,6 @@ if __name__ == "__main__":
     
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    run()

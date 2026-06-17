@@ -16,7 +16,6 @@ def manual_spatial_convolution(image, kernel):
     padded_img = np.pad(image, ((pad_h, pad_h), (pad_w, pad_w)), mode='constant')
     result = np.zeros_like(image, dtype=np.float32)
     
-    # O gargalo computacional: 
     # Para cada pixel da imagem, iteramos sobre toda a área do kernel
     for i in range(h):
         for j in range(w):
@@ -29,7 +28,7 @@ def manual_spatial_convolution(image, kernel):
 
 def apply_frequency_convolution(image, kernel):
     """
-    Mantido igual: Aplica o Teorema da Convolução usando a FFT padrão do NumPy.
+    Aplica o Teorema da Convolução usando a FFT padrão do NumPy.
     """
     start = time.perf_counter()
     
@@ -45,7 +44,7 @@ def apply_frequency_convolution(image, kernel):
     end = time.perf_counter()
     return result, (end - start)
 
-if __name__ == "__main__":
+def run():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)
     input_dir = os.path.join(project_root, "data")
@@ -57,11 +56,9 @@ if __name__ == "__main__":
         
     image = cv2.imread(input_image_path, cv2.IMREAD_GRAYSCALE)
     
-    # Reduzindo a imagem para o teste em Python puro não travar o seu PC
+    # Reduzindo a imagem para o teste em Python puro não travar o PC
     image = cv2.resize(image, (512, 512))
     
-    # Reduzi o kernel inicial para 31, pois a convolução manual é extremamente pesada.
-    # Você pode aumentar para 51 ou 71, mas prepare-se para esperar alguns minutos!
     kernel_size = 31
     kernel = np.ones((kernel_size, kernel_size), np.float32) / (kernel_size * kernel_size)
     
@@ -72,7 +69,7 @@ if __name__ == "__main__":
     print("\nCalculando no Domínio da Frequência (FFT)...")
     frequency_result, frequency_time = apply_frequency_convolution(image, kernel)
     
-    print("Calculando no Domínio Espacial Manual ...\n")
+    print("Calculando no Domínio Espacial Manual...\n")
     
     start_spatial = time.perf_counter()
     spatial_result = manual_spatial_convolution(image, kernel)
@@ -93,3 +90,6 @@ if __name__ == "__main__":
         print("VENCEDOR: Espacial")
         
     print("="*40)
+
+if __name__ == "__main__":
+    run()

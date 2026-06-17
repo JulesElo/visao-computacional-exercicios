@@ -12,7 +12,7 @@ def quantize_grayscale(image_path, factor=4):
     if img_color is None:
         raise FileNotFoundError(f"Não foi possível carregar a imagem em: {image_path}")
     
-    # 2. Converte para tons de cinza clássico (0 a 255)
+    # 2. Converte para tons de cinza (0 a 255)
     img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
     
     # 3. Aplica o agrupamento a cada 'factor' tons (divisão inteira seguida de multiplicação)
@@ -28,8 +28,8 @@ def generate_test_gradient(output_path):
     cv2.imwrite(output_path, gradient)
     print(f"Imagem de teste sintética gerada em: {output_path}")
 
-if __name__ == "__main__":
-    # Descobre o caminho absoluto de onde este script (ex1_clustering.py) está
+def run():
+    # Descobre o caminho absoluto de onde este script (ex1_quantization.py) está
     script_dir = os.path.dirname(os.path.abspath(__file__)) # Retorna o caminho até a pasta /src
     
     # Sobe um nível para encontrar a raiz do projeto e alcançar a pasta /data
@@ -69,3 +69,6 @@ if __name__ == "__main__":
     cv2.imshow("Resultado Quantizado", quantized)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    run()

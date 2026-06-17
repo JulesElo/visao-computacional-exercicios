@@ -56,7 +56,7 @@ def show_resizable_window(win_name, img, width=400):
     cv2.resizeWindow(win_name, width, height)
     cv2.imshow(win_name, img)
 
-if __name__ == "__main__":
+def run():
     # Resolução de caminhos dinâmica
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)
@@ -85,3 +85,6 @@ if __name__ == "__main__":
     
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    run()
